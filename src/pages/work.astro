@@ -1,0 +1,139 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { projects } from "../data/projects";
+---
+
+<BaseLayout title="Work | Identity Surface" description="Work index and project ledger.">
+  <section class="work-intro">
+    <div class="eyebrow">Work index</div>
+    <h1 class="section-title">Project ledger for identity, product, and technical systems.</h1>
+    <p class="section-lede">Case studies and detailed walk-throughs are available on request.</p>
+  </section>
+
+  <section class="table-wrap" aria-label="Work index table">
+    <table class="work-table">
+      <thead>
+        <tr>
+          <th scope="col">Project</th>
+          <th scope="col">Role</th>
+          <th scope="col">Org</th>
+          <th scope="col">Scope</th>
+          <th scope="col">Year</th>
+          <th scope="col">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {projects.map((project) => (
+          <tr>
+            <td class="title">{project.title}</td>
+            <td>{project.role}</td>
+            <td>{project.org}</td>
+            <td>{project.work}</td>
+            <td class="mono">{project.year}</td>
+            <td class="notes">
+              <details>
+                <summary>Details</summary>
+                <div class="detail-body">
+                  <p>{project.description}</p>
+                  <p class="detail-meta">Case study available on request.</p>
+                </div>
+              </details>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+
+  <style>
+    .work-intro {
+      display: grid;
+      gap: 12px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin-left: calc(var(--gutter) * -1);
+      margin-right: calc(var(--gutter) * -1);
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+      width: calc(100% + (var(--gutter) * 2));
+    }
+
+    .work-table {
+      width: 100%;
+      min-width: 860px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    thead th {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .title {
+      font-weight: 500;
+    }
+
+    .notes {
+      width: 190px;
+    }
+
+    .notes details {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .notes summary {
+      cursor: pointer;
+      list-style: none;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--fg);
+    }
+
+    .notes summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .detail-body {
+      padding-top: 8px;
+      color: var(--muted);
+    }
+
+    .detail-body p {
+      margin: 0 0 8px;
+    }
+
+    .detail-meta {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    @media (max-width: 700px) {
+      .work-table {
+        min-width: 720px;
+      }
+    }
+  </style>
+</BaseLayout>

@@ -1,0 +1,290 @@
+---
+const {
+  title = "Identity Surface",
+  description = "Identity Surface. Portfolio index for systems, identity, and technical design work.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global>
+      :root {
+        color-scheme: light dark;
+        --bg: #fcfcfb;
+        --fg: #0f0f0f;
+        --muted: #4f4f4f;
+        --line: #d1d1d1;
+        --accent: #0f0f0f;
+        --gutter: 24px;
+        --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+          "Courier New", monospace;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0c0c0c;
+          --fg: #f2f2f2;
+          --muted: #b6b6b6;
+          --line: #2a2a2a;
+          --accent: #f2f2f2;
+        }
+      }
+
+      [data-theme="light"] {
+        --bg: #fcfcfb;
+        --fg: #0f0f0f;
+        --muted: #4f4f4f;
+        --line: #d1d1d1;
+        --accent: #0f0f0f;
+      }
+
+      [data-theme="dark"] {
+        --bg: #0c0c0c;
+        --fg: #f2f2f2;
+        --muted: #b6b6b6;
+        --line: #2a2a2a;
+        --accent: #f2f2f2;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      a:hover,
+      a:focus-visible {
+        text-decoration: underline;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      .page {
+        padding: 0 0 60px;
+      }
+
+      .container {
+        max-width: none;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .site-header {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: start;
+        border-bottom: 1px solid var(--line);
+        padding: 24px var(--gutter) 16px;
+      }
+
+      .brand {
+        display: grid;
+        gap: 4px;
+        font-weight: 500;
+      }
+
+      .brand small {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        color: var(--muted);
+      }
+
+      .nav {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--muted);
+      }
+
+      .nav a {
+        padding-bottom: 2px;
+        border-bottom: 1px solid transparent;
+      }
+
+      .nav a:hover,
+      .nav a:focus-visible {
+        border-bottom-color: var(--fg);
+        color: var(--fg);
+        text-decoration: none;
+      }
+
+      .theme-toggle {
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--fg);
+        padding: 6px 10px;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        cursor: pointer;
+      }
+
+      main {
+        display: grid;
+        gap: 40px;
+        padding: 24px var(--gutter) 0;
+      }
+
+      footer {
+        margin-top: 40px;
+        border-top: 1px solid var(--line);
+        padding: 12px var(--gutter) 0;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .eyebrow {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        color: var(--muted);
+      }
+
+      .section-title {
+        font-size: clamp(1.4rem, 2.4vw, 2rem);
+        margin: 10px 0 12px;
+        font-weight: 500;
+      }
+
+      .section-lede {
+        color: var(--muted);
+        max-width: 70ch;
+      }
+
+      .mono {
+        font-family: var(--mono);
+      }
+
+      .rule {
+        border-top: 1px solid var(--line);
+        padding: 16px var(--gutter) 0;
+        margin-left: calc(var(--gutter) * -1);
+        margin-right: calc(var(--gutter) * -1);
+      }
+
+      @media (min-width: 960px) {
+        :root {
+          --gutter: 48px;
+        }
+
+        .page {
+          padding-bottom: 70px;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .site-header {
+          grid-template-columns: 1fr;
+        }
+
+        .nav {
+          row-gap: 8px;
+        }
+
+        footer {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="container">
+        <header class="site-header">
+          <div class="brand">
+            <small>Identity Surface</small>
+            Tim Beitz
+          </div>
+          <div class="nav">
+            <a href="/">Home</a>
+            <a href="/work">Work</a>
+            <a href="mailto:hello@identitysurface.com">Contact</a>
+            <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+              Dark
+            </button>
+          </div>
+        </header>
+        <main>
+          <slot />
+        </main>
+        <footer>
+          <div class="mono">hello@identitysurface.com</div>
+          <div>Oakland, CA</div>
+        </footer>
+      </div>
+    </div>
+    <script>
+      const storageKey = "identity-surface-theme";
+      const toggle = document.querySelector("[data-theme-toggle]");
+
+      const applyTheme = (theme) => {
+        document.documentElement.setAttribute("data-theme", theme);
+      };
+
+      const systemTheme = () =>
+        window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+
+      const initTheme = () => {
+        const stored = localStorage.getItem(storageKey);
+        applyTheme(stored || systemTheme());
+      };
+
+      const updateToggle = (theme) => {
+        if (!toggle) return;
+        toggle.setAttribute("aria-pressed", theme === "dark");
+        toggle.textContent = theme === "dark" ? "Light" : "Dark";
+      };
+
+      initTheme();
+      updateToggle(document.documentElement.getAttribute("data-theme") || "light");
+
+      if (toggle) {
+        toggle.addEventListener("click", () => {
+          const current = document.documentElement.getAttribute("data-theme") || "light";
+          const next = current === "dark" ? "light" : "dark";
+          applyTheme(next);
+          localStorage.setItem(storageKey, next);
+          updateToggle(next);
+        });
+      }
+    </script>
+  </body>
+</html>

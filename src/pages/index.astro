@@ -1,16 +1,119 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Identity Surface" description="Portfolio index for systems, identity, and technical design.">
+  <section class="profile">
+    <div class="eyebrow">Profile</div>
+    <div class="profile-grid">
+      <div class="profile-summary">
+        <h1 class="hero-title">Creative direction and systems architecture.</h1>
+        <p class="section-lede">
+          Work spans identity systems, product surfaces, and technical delivery. This is a living index with
+          case studies available on request.
+        </p>
+      </div>
+      <div class="profile-column">
+        <div class="column-title">What I do</div>
+        <ul class="list">
+          <li>Brand and identity systems</li>
+          <li>Product design and UX architecture</li>
+          <li>Technical direction and delivery</li>
+          <li>Creative leadership and alignment</li>
+        </ul>
+      </div>
+      <div class="profile-column">
+        <div class="column-title">Process and values</div>
+        <p class="section-lede">
+          Strategy to system to execution. Clear decisions, clean delivery, and work that holds up under
+          production constraints.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule section-row">
+    <div class="section-label">Work</div>
+    <div class="section-content">
+      <p class="section-lede">Project ledger with roles, scope, and notes.</p>
+      <a class="mono" href="/work">Open work index</a>
+    </div>
+  </section>
+
+  <section class="rule section-row">
+    <div class="section-label">Contact</div>
+    <div class="section-content">
+      <p class="section-lede">Available for select engagements and leadership roles.</p>
+      <p class="mono">hello@identitysurface.com</p>
+    </div>
+  </section>
+
+  <style>
+    .hero-title {
+      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+      font-weight: 500;
+      margin: 8px 0 16px;
+    }
+
+    .profile-grid {
+      display: grid;
+      gap: 28px;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .profile-summary {
+      min-width: 0;
+    }
+
+    .column-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    .list li {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+    }
+
+    .section-row {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 160px 1fr;
+    }
+
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+    }
+
+    .section-content {
+      display: grid;
+      gap: 8px;
+    }
+
+    @media (max-width: 680px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</BaseLayout>
