@@ -6,6 +6,19 @@ Format: [Semantic Versioning](https://semver.org/) with git refs for recovery.
 
 ---
 
+## [v0.2.1] - 2026-01-21
+
+**Colophon easter egg**
+
+### Added
+- Expandable colophon in footer (click to reveal)
+- Credits: Astro, Claude (Opus 4.5), Claude Code CLI, Ghostty, Cursor, Vercel, IBM Plex
+
+### Git
+- Ref: `b8f12f9`
+
+---
+
 ## [v0.2] - 2026-01-20
 
 **Minimal table layout**
