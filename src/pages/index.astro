@@ -1,15 +1,16 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { resume } from "../data/resume";
+
+const bioFile = await import("../content/bio.md");
+const Bio = bioFile.default;
+const { tagline } = bioFile.frontmatter;
 ---
 
 <BaseLayout title={resume.name} description={`${resume.title} – ${resume.location}`}>
   <section class="bio">
-    <p>
-      Creative Director working at the intersection of brand, systems, and technology.
-      Independent practice building creative and technology solutions across diverse industries.
-    </p>
-    <p class="tagline">Strategy to system to execution.</p>
+    <div class="bio-content"><Bio /></div>
+    <p class="tagline">{tagline}</p>
   </section>
 
   <section class="experience">
@@ -58,7 +59,7 @@ import { resume } from "../data/resume";
       max-width: 42ch;
     }
 
-    .bio p {
+    .bio-content :global(p) {
       margin: 0 0 12px;
       color: var(--muted);
     }
