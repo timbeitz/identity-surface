@@ -3,8 +3,8 @@ export type CaseSection = { label: string; body: string[] };
 export type CaseStudy = {
   slug: string;
   title: string;
-  summary: string; // one-line for the /work index
-  kicker: string[];
+  tags: string[]; // atomic category tags (one concept each)
+  year: string;   // distinct info type from tags
   framing: string;
   lede: string;
   sections: CaseSection[];
@@ -14,8 +14,8 @@ export type CaseStudy = {
 const teaConnect: CaseStudy = {
   slug: "tea-connect",
   title: "Tea Connect",
-  summary: "Brand & product · Hospitality SaaS · 2022–2023",
-  kicker: ["Brand & product", "Hospitality SaaS", "2022–2023"],
+  tags: ["Brand", "Product", "Hospitality", "SaaS"],
+  year: "2022–2023",
   framing: "A brief for “an app and a logo,” answered with a product.",
   lede: "One of Culture Collective’s founders — a hospitality owner I’d worked with — had an idea for a messaging app built for restaurants, and brought it to Shipyard, my creative studio, for input. What he framed as an app and a brand, we reframed as a product: a definition of what it was, who it served, and how it would reach a market. From there, the work ran through brand, UX, and launch to a working alpha on both app stores.",
   sections: [
@@ -55,8 +55,8 @@ const teaConnect: CaseStudy = {
 const amberHealth: CaseStudy = {
   slug: "amber-health",
   title: "Amber Health",
-  summary: "Brand & web · Music-industry mental health · 2023",
-  kicker: ["Brand & web", "Music-industry mental health", "2023"],
+  tags: ["Brand", "Web", "Music industry", "Mental health"],
+  year: "2023",
   framing: "The research became a company. I built the brand it goes to market as.",
   lede: "The touring-industry mental-health research I’d co-authored at THRIV had proven the problem. Then two of the people behind it — including THRIV’s founder — set out to build the service that answered it, and came to me, through Shipyard, with a logo-and-website request and a founder’s name over the door: “BorerNewman.” The first thing I gave them was a different answer. In a guarded, high-trust industry, a brand named after two people has a ceiling. We rebuilt it as Amber Health — a market-facing identity made to scale past the founders who started it. It’s still the name the company runs under today.",
   sections: [
@@ -97,8 +97,8 @@ const amberHealth: CaseStudy = {
 const thriv: CaseStudy = {
   slug: "tour-health-research-initiative",
   title: "Tour Health Research Initiative",
-  summary: "Research, brand & campaign · Touring-industry mental health · 2019–2020",
-  kicker: ["Research, brand & campaign", "Touring-industry mental health", "2019–2020"],
+  tags: ["Research", "Brand", "Campaign", "Music industry", "Mental health"],
+  year: "2019–2020",
   framing: "Turning an industry’s anecdotal pain into evidence credible enough to build on.",
   lede: "The touring music workforce was burning out — sleep, mental health, physical strain — and everyone in it knew. What nobody had was proof: no dataset rigorous enough to move an industry or fund a service. I co-founded the Tour Health Research Initiative to build that proof. The heavy statistics belonged to our academic collaborators; my problem was access — the brand, the campaign, and the distribution that reached 1,154 touring professionals most clinics never could. The result was a peer-reviewed study in the Journal of Psychiatric Research, with my name on it, and a second paper after.",
   sections: [

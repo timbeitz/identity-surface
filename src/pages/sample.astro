@@ -1,0 +1,115 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+// Dummy long-form article for reviewing detailed typography at length.
+// Light mono annotations mark each element + its settings the first time it appears.
+---
+
+<BaseLayout title="Sample article — timbeitz.com" description="Long-form typography test page.">
+  <article class="prose">
+    <a class="back" href="/style">← Style</a>
+
+    <header class="head">
+      <h1 class="title">The shift from making things to directing systems</h1>
+      <code class="anno">.title · var(--fs-title) display · weight 500</code>
+      <p class="lede">A field note on what changes when the unit of work stops being the artifact and becomes the system that produces it — and why taste matters more, not less, once the making is shared with a machine.</p>
+      <code class="anno">.lede · var(--fs-lede) 16px · muted · max 64ch</code>
+    </header>
+
+    <hr class="rule" />
+
+    <p>For most of my career the deliverable was the thing. A logo, a layout, a build. You judged the work by the artifact in front of you, and you got better by making more artifacts. That model is quietly breaking. The artifact is increasingly cheap to produce; what's scarce is knowing which artifact to produce, and being able to tell a good one from a plausible one at a glance.</p>
+    <code class="anno">p · var(--fs-body) 14px · line-height 1.7 · max 66ch</code>
+
+    <p>This is not a story about tools replacing judgment. It's the opposite. When generating an option costs almost nothing, the bottleneck moves entirely to selection and direction — the parts that were always judgment. The work becomes less like drawing and more like editing a room full of drafts you didn't have to draw.</p>
+
+    <h2 class="subhead">Direction is a skill, not a fallback</h2>
+    <code class="anno">.subhead · var(--fs-lede) 16px · weight 500 — NOTE: long-form may want its own token</code>
+
+    <p>There's a reflex to treat "directing" as what you do when you can't make it yourself. In practice it's the harder skill. To direct well you need a clear picture of the end state, a vocabulary precise enough to steer toward it, and the taste to know when you've arrived. None of that is automatic, and none of it is downstream of the tool.</p>
+
+    <p>The practitioners who struggle in this shift aren't the ones who can't use the tools. They're the ones who only ever knew how to make, and never had to articulate <em>why</em> one version was better than another. The machine is relentless about exposing that gap, because it will happily produce the mediocre version forever unless someone can say what's wrong with it.</p>
+
+    <blockquote class="quote">
+      The constraint was never the making. It was knowing what was worth making, and being able to recognize it when it appeared.
+    </blockquote>
+    <code class="anno">.quote · var(--fs-lede) · italic · left rule · max 56ch</code>
+
+    <h2 class="subhead">What stays human</h2>
+
+    <p>A few things don't transfer to the system, at least not yet. They're worth naming because they're where the work actually lives now:</p>
+
+    <ul class="list">
+      <li><strong>Problem framing.</strong> Deciding what the real problem is — not the one in the brief — remains the highest-leverage move, and the one most often skipped.</li>
+      <li><strong>Taste under ambiguity.</strong> Picking the right option from many plausible ones, fast, without a rubric.</li>
+      <li><strong>Knowing when to stop.</strong> The system will iterate indefinitely; someone has to decide it's done.</li>
+    </ul>
+    <code class="anno">.list · var(--fs-body) · li spacing 8px · marker var(--muted)</code>
+
+    <p>Inline detail survives too — a phone number, a price, a piece of <code class="inline">monospace</code> for anything that wants to read as exact. The trick is to let format carry meaning instead of labeling everything.</p>
+    <code class="anno">code.inline · var(--mono) · var(--fs-body)</code>
+
+    <h2 class="subhead">The honest version of the pitch</h2>
+
+    <p>So when someone asks whether this makes design easier, the honest answer is no — it makes the easy part easy and leaves you alone with the hard part. That's a better trade than it sounds, but only if you've built the judgment to take it. You can read more about how I think about this in the <a href="/work">work</a>, where the pattern shows up in every project: the brief said one thing, and the work turned out to be another.</p>
+    <code class="anno">a · inherits color · underline-on-hover</code>
+
+    <p>The rest is practice. Make enough decisions, out loud, with reasons attached, and the directing muscle grows. The tool doesn't build it for you. It just makes very clear, very quickly, whether you have it.</p>
+  </article>
+
+  <style>
+    .prose { max-width: 680px; }
+
+    .back {
+      display: inline-block;
+      font-size: var(--fs-label);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-label);
+      color: var(--muted);
+    }
+    .back:hover { color: var(--fg); text-decoration: none; }
+
+    .head { margin-top: 28px; }
+    .title { font-size: var(--fs-title); line-height: 1.05; letter-spacing: -0.01em; font-weight: 500; margin: 0; max-width: 20ch; }
+    .lede { font-size: var(--fs-lede); line-height: 1.6; color: var(--muted); max-width: 64ch; margin: 16px 0 0; }
+
+    .rule { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+
+    .prose p { font-size: var(--fs-body); line-height: 1.7; max-width: 66ch; margin: 0 0 18px; }
+    .prose p em { font-style: italic; }
+    .prose p strong { font-weight: 500; }
+
+    .subhead {
+      font-size: var(--fs-lede);
+      font-weight: 500;
+      margin: 36px 0 14px;
+      max-width: 40ch;
+    }
+
+    .quote {
+      margin: 28px 0;
+      padding-left: 20px;
+      border-left: 2px solid var(--line);
+      font-size: var(--fs-lede);
+      font-style: italic;
+      color: var(--muted);
+      max-width: 56ch;
+    }
+
+    .list { margin: 0 0 18px; padding-left: 20px; max-width: 66ch; }
+    .list li { font-size: var(--fs-body); line-height: 1.7; margin-bottom: 8px; }
+    .list li::marker { color: var(--muted); }
+    .list strong { font-weight: 500; }
+
+    .inline { font-family: var(--mono); font-size: var(--fs-body); }
+
+    /* annotations — remove for a clean reading view */
+    .anno {
+      display: block;
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--muted);
+      opacity: 0.7;
+      margin: -10px 0 18px;
+    }
+  </style>
+</BaseLayout>

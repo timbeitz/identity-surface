@@ -55,8 +55,9 @@ const { tagline } = bioFile.frontmatter;
   </section>
 
   <style>
+    /* Homepage uses only two sizes: body (--fs-body) and label (--fs-label). */
     .bio {
-      max-width: 42ch;
+      max-width: 48ch;
     }
 
     .bio-content :global(p) {
@@ -82,16 +83,18 @@ const { tagline } = bioFile.frontmatter;
       border-collapse: collapse;
     }
 
-    th, td {
+    th,
+    td {
       text-align: left;
-      padding: 14px 0;
+      padding: 13px 0;
       border-bottom: 1px solid var(--line);
+      font-size: var(--fs-body);
     }
 
     th {
-      font-size: 10px;
+      font-size: var(--fs-label);
       text-transform: uppercase;
-      letter-spacing: 0.2em;
+      letter-spacing: var(--tracking-label);
       color: var(--muted);
       font-weight: 500;
     }
@@ -119,7 +122,6 @@ const { tagline } = bioFile.frontmatter;
     .years {
       text-align: right;
       color: var(--muted);
-      font-size: 13px;
     }
 
     th:last-child {
@@ -133,15 +135,15 @@ const { tagline } = bioFile.frontmatter;
 
     .detail-row {
       display: grid;
-      grid-template-columns: 100px 1fr;
+      grid-template-columns: 110px 1fr;
       gap: 16px;
-      font-size: 14px;
+      font-size: var(--fs-body);
     }
 
     .detail-label {
-      font-size: 10px;
+      font-size: var(--fs-label);
       text-transform: uppercase;
-      letter-spacing: 0.2em;
+      letter-spacing: var(--tracking-label);
       color: var(--muted);
       padding-top: 2px;
     }
@@ -157,7 +159,6 @@ const { tagline } = bioFile.frontmatter;
 
     .contact-links a {
       font-family: var(--mono);
-      font-size: 13px;
     }
 
     @media (max-width: 600px) {

@@ -1,7 +1,7 @@
 ---
 const {
-  title = "Identity Surface",
-  description = "Identity Surface. Portfolio index for systems, identity, and technical design work.",
+  title = "timbeitz.com",
+  description = "Tim Beitz — product, brand, and research work.",
 } = Astro.props;
 ---
 
@@ -31,6 +31,14 @@ const {
         --gutter: 24px;
         --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
           "Courier New", monospace;
+
+        /* Type scale — intentionally small. Four roles, nothing else.
+           body (reading) · lede (lead paragraphs) · label (uppercase nav/labels) · title (display) */
+        --fs-body: 0.875rem;  /* 14px */
+        --fs-lede: 1rem;      /* 16px */
+        --fs-label: 0.6875rem;/* 11px */
+        --fs-title: clamp(2.2rem, 5.5vw, 3.4rem);
+        --tracking-label: 0.2em;
       }
 
       @media (prefers-color-scheme: dark) {
@@ -68,8 +76,8 @@ const {
         background: var(--bg);
         color: var(--fg);
         font-family: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 15px;
-        line-height: 1.5;
+        font-size: var(--fs-body);
+        line-height: 1.6;
       }
 
       a {
@@ -101,32 +109,28 @@ const {
         display: grid;
         grid-template-columns: 1fr auto;
         gap: 24px;
-        align-items: start;
+        align-items: center;
         border-bottom: 1px solid var(--line);
-        padding: 24px var(--gutter) 16px;
+        padding: 18px var(--gutter);
       }
 
       .brand {
-        display: grid;
-        gap: 4px;
+        font-size: var(--fs-body);
         font-weight: 500;
       }
 
-      .brand small {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.22em;
+      .brand:hover {
+        text-decoration: none;
         color: var(--muted);
       }
 
       .nav {
         display: flex;
-        gap: 16px;
+        gap: 18px;
         align-items: center;
-        flex-wrap: wrap;
-        font-size: 11px;
+        font-size: var(--fs-label);
         text-transform: uppercase;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--tracking-label);
         color: var(--muted);
       }
 
@@ -142,15 +146,36 @@ const {
         text-decoration: none;
       }
 
-      .theme-toggle {
-        border: 1px solid var(--line);
-        background: transparent;
+      .nav-icon {
+        display: inline-flex;
+        align-items: center;
+        color: var(--muted);
+      }
+
+      .nav-icon:hover {
         color: var(--fg);
-        padding: 6px 10px;
-        font-size: 10px;
-        text-transform: uppercase;
-        letter-spacing: 0.22em;
+      }
+
+      .nav-icon svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      /* Theme toggle: a filled circle showing the CURRENT page color
+         (white in light mode, black in dark mode). Shows state, not target. */
+      .theme-toggle {
+        width: 16px;
+        height: 16px;
+        padding: 0;
+        border: 1px solid var(--fg);
+        border-radius: 50%;
+        background: var(--bg);
         cursor: pointer;
+        display: inline-block;
+      }
+
+      .theme-toggle:hover {
+        border-color: var(--muted);
       }
 
       main {
@@ -162,29 +187,28 @@ const {
       footer {
         margin-top: 40px;
         border-top: 1px solid var(--line);
-        padding: 12px var(--gutter) 0;
+        padding: 14px var(--gutter) 0;
         display: flex;
-        gap: 12px;
+        gap: 16px;
         flex-wrap: wrap;
+        align-items: baseline;
         justify-content: space-between;
-        font-size: 12px;
+        font-size: var(--fs-label);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-label);
         color: var(--muted);
       }
 
-      .colophon {
-        width: 100%;
-        margin-top: 12px;
-        padding-top: 12px;
-        border-top: 1px solid var(--line);
+      footer .email {
+        font-family: var(--mono);
+        text-transform: none;
+        letter-spacing: 0;
       }
 
       .colophon summary {
         cursor: pointer;
-        font-size: 10px;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
         list-style: none;
-        opacity: 0.5;
+        opacity: 0.6;
         transition: opacity 0.15s;
       }
 
@@ -197,44 +221,44 @@ const {
       }
 
       .colophon-content {
-        margin-top: 12px;
+        margin-top: 10px;
         display: grid;
         gap: 6px;
+        text-transform: none;
+        letter-spacing: 0;
+        font-size: var(--fs-label);
       }
 
       .colophon-content p {
         margin: 0;
-        font-size: 11px;
         line-height: 1.5;
+        color: var(--muted);
       }
 
+      /* Shared building blocks */
       .eyebrow {
-        font-size: 11px;
+        font-size: var(--fs-label);
         text-transform: uppercase;
-        letter-spacing: 0.22em;
+        letter-spacing: var(--tracking-label);
         color: var(--muted);
       }
 
       .section-title {
-        font-size: clamp(1.4rem, 2.4vw, 2rem);
+        font-size: var(--fs-title);
+        line-height: 1.05;
+        letter-spacing: -0.01em;
         margin: 10px 0 12px;
         font-weight: 500;
       }
 
       .section-lede {
+        font-size: var(--fs-lede);
         color: var(--muted);
-        max-width: 70ch;
+        max-width: 64ch;
       }
 
       .mono {
         font-family: var(--mono);
-      }
-
-      .rule {
-        border-top: 1px solid var(--line);
-        padding: 16px var(--gutter) 0;
-        margin-left: calc(var(--gutter) * -1);
-        margin-right: calc(var(--gutter) * -1);
       }
 
       @media (min-width: 960px) {
@@ -248,16 +272,9 @@ const {
       }
 
       @media (max-width: 720px) {
-        .site-header {
-          grid-template-columns: 1fr;
-        }
-
-        .nav {
-          row-gap: 8px;
-        }
-
         footer {
           flex-direction: column;
+          gap: 10px;
         }
       }
     </style>
@@ -266,31 +283,29 @@ const {
     <div class="page">
       <div class="container">
         <header class="site-header">
-          <div class="brand">
-            <small>Identity Surface</small>
-            Tim Beitz
-          </div>
-          <div class="nav">
-            <a href="/">Home</a>
-            <!-- <a href="/work">Work</a> -->
-            <a href="mailto:timbeitz@gmail.com">Contact</a>
-            <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
-              Dark
-            </button>
-          </div>
+          <a class="brand" href="/">timbeitz.com</a>
+          <nav class="nav">
+            <a href="/work">Work</a>
+            <a class="nav-icon" href="mailto:timbeitz@gmail.com" aria-label="Email Tim">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="M3 7l9 6 9-6" />
+              </svg>
+            </a>
+            <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme"></button>
+          </nav>
         </header>
         <main>
           <slot />
         </main>
         <footer>
-          <div class="mono">timbeitz@gmail.com</div>
-          <div>Philadelphia, PA</div>
+          <a class="email" href="mailto:timbeitz@gmail.com">timbeitz@gmail.com</a>
           <details class="colophon">
             <summary>Colophon</summary>
             <div class="colophon-content">
-              <p>Built with Astro, vanilla CSS, and too much coffee.</p>
-              <p>AI-assisted by Claude (Opus 4.5) via Claude Code CLI in Ghostty terminal, with Cursor for editing.</p>
-              <p>Hosted on Vercel. Set in IBM Plex.</p>
+              <p>Made in Philadelphia.</p>
+              <p>Built with Astro and vanilla CSS.</p>
+              <p>AI-assisted by Claude via Claude Code. Hosted on Vercel. Set in IBM Plex.</p>
             </div>
           </details>
         </footer>
@@ -307,15 +322,15 @@ const {
       const systemTheme = () =>
         window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
+      const updateToggle = (theme) => {
+        if (!toggle) return;
+        // The circle shows the CURRENT color; the label announces the action.
+        toggle.setAttribute("aria-label", theme === "dark" ? "Switch to light theme" : "Switch to dark theme");
+      };
+
       const initTheme = () => {
         const stored = localStorage.getItem(storageKey);
         applyTheme(stored || systemTheme());
-      };
-
-      const updateToggle = (theme) => {
-        if (!toggle) return;
-        toggle.setAttribute("aria-pressed", theme === "dark");
-        toggle.textContent = theme === "dark" ? "Light" : "Dark";
       };
 
       initTheme();

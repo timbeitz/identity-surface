@@ -1,0 +1,174 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// Living UI inventory. Each item shows the real element + its settings.
+// Pulls from the same tokens as the rest of the site (see BaseLayout :root).
+const tokens = [
+  { name: "--fs-title", value: "clamp(2.2rem, 5.5vw, 3.4rem)", role: "Display / page & case titles" },
+  { name: "--fs-lede", value: "1rem · 16px", role: "Lead paragraphs, short descriptions" },
+  { name: "--fs-body", value: "0.875rem · 14px", role: "Reading copy" },
+  { name: "--fs-label", value: "0.6875rem · 11px", role: "Uppercase labels, nav, meta" },
+];
+const colors = [
+  { name: "--bg", role: "Page background" },
+  { name: "--fg", role: "Primary text" },
+  { name: "--muted", role: "Secondary text" },
+  { name: "--line", role: "Hairlines, borders" },
+];
+---
+
+<BaseLayout title="Style — timbeitz.com" description="UI inventory and type scale.">
+  <section class="intro">
+    <div class="eyebrow">Reference</div>
+    <h1 class="section-title">Style inventory.</h1>
+    <p class="section-lede">Every UI element with its real settings. See <a href="/sample">/sample</a> for long-form reading.</p>
+  </section>
+
+  <!-- TYPE SCALE -->
+  <section class="spec-group">
+    <h2 class="eyebrow">Type scale</h2>
+
+    <div class="spec">
+      <div class="case-title-demo">Display title</div>
+      <code class="anno">.section-title / .case-title · var(--fs-title) · weight 500 · line-height 1.05</code>
+    </div>
+    <div class="spec">
+      <p class="lede-demo">A lead paragraph — slightly larger than body, set in muted, used to open a page or case.</p>
+      <code class="anno">.case-lede / .section-lede · var(--fs-lede) 16px · color var(--muted) · max 64ch</code>
+    </div>
+    <div class="spec">
+      <p class="body-demo">Body copy. The default reading size for everything long-form — case bodies, article text, descriptions. Set at fourteen pixels, line-height 1.7, in the foreground color.</p>
+      <code class="anno">.case-p / body · var(--fs-body) 14px · line-height 1.7 · color var(--fg) · max 66ch</code>
+    </div>
+    <div class="spec">
+      <div class="label-demo">Section label</div>
+      <code class="anno">.eyebrow / .case-label · var(--fs-label) 11px · uppercase · letter-spacing 0.2em · var(--muted)</code>
+    </div>
+  </section>
+
+  <!-- NAVIGATION -->
+  <section class="spec-group">
+    <h2 class="eyebrow">Navigation & controls</h2>
+
+    <div class="spec">
+      <span class="brand-demo">timbeitz.com</span>
+      <code class="anno">.brand · var(--fs-body) · weight 500 · links to /</code>
+    </div>
+    <div class="spec">
+      <span class="navlink-demo">Work</span>
+      <code class="anno">.nav a · var(--fs-label) · uppercase · underline-on-hover</code>
+    </div>
+    <div class="spec">
+      <span class="nav-icon-demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" />
+        </svg>
+      </span>
+      <code class="anno">.nav-icon (mail) · 16px · stroke currentColor · href mailto:</code>
+    </div>
+    <div class="spec">
+      <span class="toggle-demo" aria-hidden="true"></span>
+      <code class="anno">.theme-toggle · 16px circle · fill var(--bg) = current color · border var(--fg)</code>
+    </div>
+  </section>
+
+  <!-- TAGS & META -->
+  <section class="spec-group">
+    <h2 class="eyebrow">Tags & meta</h2>
+    <div class="spec">
+      <ul class="tags-demo">
+        <li class="tag">Brand</li><li class="tag">Product</li><li class="tag">Research</li>
+      </ul>
+      <code class="anno">.tag · 10px · uppercase · 1px var(--line) border · radius 100px · pill</code>
+    </div>
+    <div class="spec">
+      <span class="year-demo mono">2022–2023</span>
+      <code class="anno">.case-year · var(--fs-label) · mono · var(--muted) · distinct from tags</code>
+    </div>
+  </section>
+
+  <!-- STRUCTURE -->
+  <section class="spec-group">
+    <h2 class="eyebrow">Structure</h2>
+    <div class="spec">
+      <hr class="rule-demo" />
+      <code class="anno">hr · 1px var(--line) · separates header from body</code>
+    </div>
+    <div class="spec">
+      <dl class="scope-demo">
+        <div><dt>Role</dt><dd>Principal, creative director, designer</dd></div>
+        <div><dt>Year</dt><dd>2022–2023</dd></div>
+      </dl>
+      <code class="anno">.scope-row · dt mono var(--fs-label) uppercase · dd var(--fs-body)</code>
+    </div>
+  </section>
+
+  <!-- TOKENS -->
+  <section class="spec-group">
+    <h2 class="eyebrow">Tokens</h2>
+    <dl class="token-table">
+      {tokens.map((t) => (
+        <div class="token-row">
+          <dt class="mono">{t.name}</dt>
+          <dd><span class="mono">{t.value}</span> — {t.role}</dd>
+        </div>
+      ))}
+      {colors.map((c) => (
+        <div class="token-row">
+          <dt class="mono">{c.name}</dt>
+          <dd><span class="swatch" style={`background: var(${c.name})`}></span> {c.role}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <style>
+    .intro { display: grid; gap: 8px; }
+    .spec-group {
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+      display: grid;
+      gap: 24px;
+    }
+    .spec { display: grid; gap: 8px; }
+    .anno {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* demos mirror the real classes */
+    .case-title-demo { font-size: var(--fs-title); font-weight: 500; line-height: 1.05; letter-spacing: -0.01em; }
+    .lede-demo { font-size: var(--fs-lede); color: var(--muted); max-width: 64ch; margin: 0; }
+    .body-demo { font-size: var(--fs-body); line-height: 1.7; max-width: 66ch; margin: 0; }
+    .label-demo { font-size: var(--fs-label); text-transform: uppercase; letter-spacing: var(--tracking-label); color: var(--muted); }
+
+    .brand-demo { font-size: var(--fs-body); font-weight: 500; }
+    .navlink-demo { font-size: var(--fs-label); text-transform: uppercase; letter-spacing: var(--tracking-label); color: var(--muted); }
+    .nav-icon-demo svg { width: 16px; height: 16px; color: var(--muted); }
+    .toggle-demo { display: inline-block; width: 16px; height: 16px; border: 1px solid var(--fg); border-radius: 50%; background: var(--bg); }
+
+    .tags-demo { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); border: 1px solid var(--line); border-radius: 100px; padding: 3px 10px; }
+    .year-demo { font-size: var(--fs-label); color: var(--muted); }
+
+    .rule-demo { border: 0; border-top: 1px solid var(--line); margin: 0; }
+
+    .scope-demo { margin: 0; max-width: 64ch; }
+    .scope-demo > div { display: grid; grid-template-columns: 150px 1fr; gap: 24px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+    .scope-demo > div:last-child { border-bottom: none; }
+    .scope-demo dt { font-family: var(--mono); font-size: var(--fs-label); text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); }
+    .scope-demo dd { margin: 0; font-size: var(--fs-body); }
+
+    .token-table { margin: 0; display: grid; gap: 0; }
+    .token-row { display: grid; grid-template-columns: 220px 1fr; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: var(--fs-body); }
+    .token-row dt { color: var(--fg); }
+    .token-row dd { margin: 0; color: var(--muted); }
+    .swatch { display: inline-block; width: 12px; height: 12px; border: 1px solid var(--line); vertical-align: middle; margin-right: 6px; }
+
+    @media (max-width: 600px) {
+      .token-row, .scope-demo > div { grid-template-columns: 1fr; gap: 4px; }
+    }
+  </style>
+</BaseLayout>

@@ -3,25 +3,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { caseStudies } from "../data/work";
 ---
 
-<BaseLayout title="Work — Tim Beitz" description="Selected case studies — product, brand, and research work.">
+<BaseLayout title="Work — timbeitz.com" description="Selected case studies — product, brand, and research work.">
   <section class="work-intro">
     <div class="eyebrow">Work</div>
     <h1 class="section-title">Selected case studies.</h1>
-    <p class="section-lede">
-      A few projects where the brief was one thing and the work turned out to be
-      another — product, brand, and research, mostly for teams who needed all three.
-    </p>
   </section>
 
   <section class="case-index" aria-label="Case studies">
     {caseStudies.map((c) => (
       <a class="case-link" href={`/work/${c.slug}`}>
-        <div class="case-link-main">
+        <div class="case-link-head">
           <span class="case-link-title">{c.title}</span>
-          <span class="case-link-framing">{c.framing}</span>
+          <span class="case-link-year mono">{c.year}</span>
         </div>
-        <span class="case-link-meta mono">{c.summary}</span>
-        <span class="case-link-arrow" aria-hidden="true">→</span>
+        <ul class="tags">
+          {c.tags.map((t) => <li class="tag">{t}</li>)}
+        </ul>
       </a>
     ))}
   </section>
@@ -29,22 +26,17 @@ import { caseStudies } from "../data/work";
   <style>
     .work-intro {
       display: grid;
-      gap: 10px;
+      gap: 8px;
     }
 
     .case-index {
-      margin-top: 36px;
+      margin-top: 32px;
       border-top: 1px solid var(--line);
     }
 
     .case-link {
       display: grid;
-      grid-template-columns: 1fr auto;
-      grid-template-areas:
-        "main arrow"
-        "meta arrow";
-      gap: 6px 20px;
-      align-items: start;
+      gap: 12px;
       padding: 22px 0;
       border-bottom: 1px solid var(--line);
     }
@@ -53,15 +45,15 @@ import { caseStudies } from "../data/work";
       text-decoration: none;
     }
 
-    .case-link-main {
-      grid-area: main;
+    .case-link-head {
       display: flex;
-      flex-direction: column;
-      gap: 4px;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
     }
 
     .case-link-title {
-      font-size: 1.25rem;
+      font-size: var(--fs-lede);
       font-weight: 500;
     }
 
@@ -70,42 +62,31 @@ import { caseStudies } from "../data/work";
       text-underline-offset: 3px;
     }
 
-    .case-link-framing {
+    /* Date — distinct info type from tags: mono, no chrome */
+    .case-link-year {
+      font-size: var(--fs-label);
       color: var(--muted);
-      max-width: 56ch;
+      white-space: nowrap;
     }
 
-    .case-link-meta {
-      grid-area: meta;
-      font-size: 11px;
+    /* Tags — atomic category pills */
+    .tags {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       color: var(--muted);
-    }
-
-    .case-link-arrow {
-      grid-area: arrow;
-      align-self: center;
-      color: var(--muted);
-      transition: transform 0.12s ease;
-    }
-
-    .case-link:hover .case-link-arrow {
-      transform: translateX(4px);
-      color: var(--fg);
-    }
-
-    @media (max-width: 600px) {
-      .case-link {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-          "main"
-          "meta";
-      }
-
-      .case-link-arrow {
-        display: none;
-      }
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      padding: 3px 10px;
     }
   </style>
 </BaseLayout>
