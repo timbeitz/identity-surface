@@ -1,138 +1,110 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { projects } from "../data/projects";
+import { caseStudies } from "../data/work";
 ---
 
-<BaseLayout title="Work | Identity Surface" description="Work index and project ledger.">
+<BaseLayout title="Work — Tim Beitz" description="Selected case studies — product, brand, and research work.">
   <section class="work-intro">
-    <div class="eyebrow">Work index</div>
-    <h1 class="section-title">Project ledger for identity, product, and technical systems.</h1>
-    <p class="section-lede">Case studies and detailed walk-throughs are available on request.</p>
+    <div class="eyebrow">Work</div>
+    <h1 class="section-title">Selected case studies.</h1>
+    <p class="section-lede">
+      A few projects where the brief was one thing and the work turned out to be
+      another — product, brand, and research, mostly for teams who needed all three.
+    </p>
   </section>
 
-  <section class="table-wrap" aria-label="Work index table">
-    <table class="work-table">
-      <thead>
-        <tr>
-          <th scope="col">Project</th>
-          <th scope="col">Role</th>
-          <th scope="col">Org</th>
-          <th scope="col">Scope</th>
-          <th scope="col">Year</th>
-          <th scope="col">Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        {projects.map((project) => (
-          <tr>
-            <td class="title">{project.title}</td>
-            <td>{project.role}</td>
-            <td>{project.org}</td>
-            <td>{project.work}</td>
-            <td class="mono">{project.year}</td>
-            <td class="notes">
-              <details>
-                <summary>Details</summary>
-                <div class="detail-body">
-                  <p>{project.description}</p>
-                  <p class="detail-meta">Case study available on request.</p>
-                </div>
-              </details>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+  <section class="case-index" aria-label="Case studies">
+    {caseStudies.map((c) => (
+      <a class="case-link" href={`/work/${c.slug}`}>
+        <div class="case-link-main">
+          <span class="case-link-title">{c.title}</span>
+          <span class="case-link-framing">{c.framing}</span>
+        </div>
+        <span class="case-link-meta mono">{c.summary}</span>
+        <span class="case-link-arrow" aria-hidden="true">→</span>
+      </a>
+    ))}
   </section>
 
   <style>
     .work-intro {
       display: grid;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .table-wrap {
-      overflow-x: auto;
+    .case-index {
+      margin-top: 36px;
       border-top: 1px solid var(--line);
+    }
+
+    .case-link {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "main arrow"
+        "meta arrow";
+      gap: 6px 20px;
+      align-items: start;
+      padding: 22px 0;
       border-bottom: 1px solid var(--line);
-      margin-left: calc(var(--gutter) * -1);
-      margin-right: calc(var(--gutter) * -1);
-      padding-left: var(--gutter);
-      padding-right: var(--gutter);
-      width: calc(100% + (var(--gutter) * 2));
     }
 
-    .work-table {
-      width: 100%;
-      min-width: 860px;
-      border-collapse: collapse;
-      font-size: 13px;
+    .case-link:hover {
+      text-decoration: none;
     }
 
-    th,
-    td {
-      text-align: left;
-      padding: 12px 10px;
-      border-bottom: 1px solid var(--line);
-      vertical-align: top;
+    .case-link-main {
+      grid-area: main;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
-    thead th {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      color: var(--muted);
+    .case-link-title {
+      font-size: 1.25rem;
       font-weight: 500;
     }
 
-    tbody tr:last-child td {
-      border-bottom: none;
+    .case-link:hover .case-link-title {
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
-    .title {
-      font-weight: 500;
-    }
-
-    .notes {
-      width: 190px;
-    }
-
-    .notes details {
+    .case-link-framing {
       color: var(--muted);
-      margin: 0;
+      max-width: 56ch;
     }
 
-    .notes summary {
-      cursor: pointer;
-      list-style: none;
-      font-size: 10px;
+    .case-link-meta {
+      grid-area: meta;
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    .case-link-arrow {
+      grid-area: arrow;
+      align-self: center;
+      color: var(--muted);
+      transition: transform 0.12s ease;
+    }
+
+    .case-link:hover .case-link-arrow {
+      transform: translateX(4px);
       color: var(--fg);
     }
 
-    .notes summary::-webkit-details-marker {
-      display: none;
-    }
+    @media (max-width: 600px) {
+      .case-link {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "main"
+          "meta";
+      }
 
-    .detail-body {
-      padding-top: 8px;
-      color: var(--muted);
-    }
-
-    .detail-body p {
-      margin: 0 0 8px;
-    }
-
-    .detail-meta {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-    }
-
-    @media (max-width: 700px) {
-      .work-table {
-        min-width: 720px;
+      .case-link-arrow {
+        display: none;
       }
     }
   </style>

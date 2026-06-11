@@ -1,0 +1,190 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { caseStudies } from "../../data/work";
+
+export function getStaticPaths() {
+  return caseStudies.map((c) => ({
+    params: { slug: c.slug },
+    props: { caseStudy: c },
+  }));
+}
+
+const { caseStudy } = Astro.props;
+---
+
+<BaseLayout
+  title={`${caseStudy.title} — Work — Tim Beitz`}
+  description={caseStudy.framing}
+>
+  <article class="case">
+    <a class="case-back" href="/work">← Work</a>
+
+    <header class="case-header">
+      <div class="kicker">
+        {caseStudy.kicker.map((k) => <span>{k}</span>)}
+      </div>
+      <h1 class="case-title">{caseStudy.title}</h1>
+      <p class="case-framing">{caseStudy.framing}</p>
+      <p class="case-lede">{caseStudy.lede}</p>
+    </header>
+
+    {caseStudy.sections.map((section) => (
+      <section class="case-section">
+        <h2 class="case-label">{section.label}</h2>
+        {section.body.map((p) => <p class="case-p">{p}</p>)}
+      </section>
+    ))}
+
+    <section class="case-scope">
+      <h2 class="case-label">Scope</h2>
+      <dl class="scope-grid">
+        {caseStudy.scope.map((row) => (
+          <div class="scope-row">
+            <dt>{row.label}</dt>
+            <dd>{row.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  </article>
+
+  <style>
+    /* Single left spine. Everything shares one left edge and one measure. */
+    .case {
+      max-width: 680px;
+    }
+
+    .case-back {
+      display: inline-block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+    }
+
+    .case-back:hover {
+      color: var(--fg);
+      text-decoration: none;
+    }
+
+    .case-header {
+      margin-top: 28px;
+    }
+
+    .kicker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+    }
+
+    .kicker span {
+      position: relative;
+    }
+
+    .kicker span:not(:last-child)::after {
+      content: "·";
+      position: absolute;
+      right: -11px;
+      color: var(--line);
+    }
+
+    .case-title {
+      font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      font-weight: 500;
+      margin: 14px 0 0;
+    }
+
+    .case-framing {
+      font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+      line-height: 1.4;
+      font-weight: 500;
+      color: var(--fg);
+      max-width: 40ch;
+      margin: 16px 0 0;
+    }
+
+    .case-lede {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 64ch;
+      margin: 20px 0 0;
+    }
+
+    .case-section {
+      margin-top: 44px;
+    }
+
+    .case-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      font-weight: 500;
+      margin: 0 0 14px;
+    }
+
+    .case-p {
+      max-width: 64ch;
+      margin: 0 0 16px;
+      font-size: 1.0rem;
+      line-height: 1.7;
+      color: var(--fg);
+    }
+
+    .case-p:last-child {
+      margin-bottom: 0;
+    }
+
+    .case-scope {
+      margin-top: 48px;
+      border-top: 1px solid var(--line);
+      padding-top: 28px;
+    }
+
+    .scope-grid {
+      margin: 0;
+      max-width: 64ch;
+    }
+
+    .scope-row {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 24px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .scope-row:last-child {
+      border-bottom: none;
+    }
+
+    .scope-row dt {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      padding-top: 2px;
+    }
+
+    .scope-row dd {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .scope-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+    }
+  </style>
+</BaseLayout>
