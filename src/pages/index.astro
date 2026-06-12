@@ -5,29 +5,43 @@ import { resume } from "../data/resume";
 const bioFile = await import("../content/bio.md");
 const Bio = bioFile.default;
 const { tagline } = bioFile.frontmatter;
+
+// Roles — distilled from the public voice spec (umbrella: creative technologist).
+// PLACEHOLDER ORDER — confirm with Tim.
+const roles = ["Creative Technologist", "Creative Director", "Systems Architect"];
 ---
 
 <BaseLayout title={resume.name} description={`${resume.title} – ${resume.location}`}>
+  <!-- Type-as-hero (New Utilitarian) -->
+  <section class="hero">
+    <div class="hero-bottom">
+      <div class="hero-identity">
+        <h1 class="hero-name">Tim<br />Beitz</h1>
+        <div class="hero-roles">
+          {roles.map((r) => <span class="hero-role">/ {r}</span>)}
+        </div>
+      </div>
+      <div class="hero-meta">
+        <span class="mono meta-coords">39.9526°N · 75.1652°W</span>
+        <time id="clock" class="mono meta-clock">--:--:--</time>
+        <span class="mono meta-copy">© 2026 Tim Beitz</span>
+      </div>
+    </div>
+  </section>
+
   <section class="bio">
     <div class="bio-content"><Bio /></div>
     <p class="tagline">{tagline}</p>
   </section>
 
   <section class="experience">
+    <div class="eyebrow exp-label">Experience</div>
     <table>
-      <thead>
-        <tr>
-          <th>Role</th>
-          <th class="hide-mobile">Type</th>
-          <th>Company</th>
-          <th>Years</th>
-        </tr>
-      </thead>
       <tbody>
         {resume.experience.map((job) => (
           <tr>
-            <td>{job.role}</td>
-            <td class="hide-mobile type">{job.type}</td>
+            <td class="role">{job.role}</td>
+            <td class="hide-mobile type mono">{job.type}</td>
             <td class="company">{job.company}</td>
             <td class="mono years">{job.years}</td>
           </tr>
@@ -38,15 +52,15 @@ const { tagline } = bioFile.frontmatter;
 
   <section class="details">
     <div class="detail-row">
-      <div class="detail-label">Skills</div>
+      <div class="detail-label mono">Skills</div>
       <div class="detail-content">{resume.skills.join(", ")}</div>
     </div>
     <div class="detail-row">
-      <div class="detail-label">Education</div>
+      <div class="detail-label mono">Education</div>
       <div class="detail-content">{resume.education.degree}, {resume.education.school}</div>
     </div>
     <div class="detail-row">
-      <div class="detail-label">Contact</div>
+      <div class="detail-label mono">Contact</div>
       <div class="detail-content contact-links">
         <a href={`mailto:${resume.contact.email}`}>{resume.contact.email}</a>
         <a href={`https://${resume.contact.linkedin}`} target="_blank" rel="noopener">{resume.contact.linkedin}</a>
@@ -55,27 +69,112 @@ const { tagline } = bioFile.frontmatter;
   </section>
 
   <style>
-    /* Homepage uses only two sizes: body (--fs-body) and label (--fs-label). */
+    /* ── Hero ───────────────────────────────────────── */
+    .hero {
+      min-height: 62vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: var(--sp-l);
+    }
+
+    .hero-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: var(--sp-xl);
+      flex-wrap: wrap;
+    }
+
+    .hero-name {
+      font-size: var(--fs-hero);
+      font-weight: 300;
+      letter-spacing: -0.035em;
+      line-height: 0.9;
+      margin: 0;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: rise 0.9s var(--ease-out) 0.05s forwards;
+    }
+
+    .hero-identity {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--sp-m);
+    }
+
+    .hero-roles {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      padding-bottom: 0.8rem;
+      opacity: 0;
+      animation: fade 0.8s ease 0.5s forwards;
+    }
+
+    .hero-role {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fg-mid);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.4rem;
+      padding-bottom: 0.4rem;
+      opacity: 0;
+      animation: fade 0.8s ease 0.7s forwards;
+    }
+
+    .meta-coords,
+    .meta-copy {
+      font-size: var(--fs-meta);
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    .meta-clock {
+      font-size: 1.1rem;
+      color: var(--fg-mid);
+      letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    @keyframes rise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade {
+      to { opacity: 1; }
+    }
+
+    /* ── Bio ────────────────────────────────────────── */
     .bio {
-      max-width: 48ch;
+      max-width: 52ch;
+      border-top: 1px solid var(--line);
+      padding-top: var(--sp-l);
     }
 
     .bio-content :global(p) {
       margin: 0 0 12px;
-      color: var(--muted);
+      color: var(--fg-mid);
+      font-size: var(--fs-lede);
+      line-height: 1.55;
+      font-weight: 300;
     }
 
     .tagline {
       color: var(--fg) !important;
-      font-weight: 500;
+      font-weight: 400;
+      font-size: var(--fs-body);
     }
 
-    .experience {
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      margin-left: calc(var(--gutter) * -1);
-      margin-right: calc(var(--gutter) * -1);
-      padding: 0 var(--gutter);
+    /* ── Experience ─────────────────────────────────── */
+    .exp-label {
+      margin-bottom: 12px;
     }
 
     table {
@@ -83,51 +182,39 @@ const { tagline } = bioFile.frontmatter;
       border-collapse: collapse;
     }
 
-    th,
     td {
       text-align: left;
-      padding: 13px 0;
+      padding: 14px 0;
       border-bottom: 1px solid var(--line);
       font-size: var(--fs-body);
-    }
-
-    th {
-      font-size: var(--fs-label);
-      text-transform: uppercase;
-      letter-spacing: var(--tracking-label);
-      color: var(--muted);
-      font-weight: 500;
     }
 
     tbody tr:last-child td {
       border-bottom: none;
     }
 
-    tbody tr {
-      transition: background 0.1s;
-    }
-
-    tbody tr:hover {
-      background: var(--line);
-    }
-
     .company {
-      font-weight: 500;
+      color: var(--fg);
+    }
+
+    .role {
+      color: var(--fg);
     }
 
     .type {
       color: var(--muted);
+      font-size: var(--fs-label);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
     .years {
       text-align: right;
       color: var(--muted);
+      font-size: var(--fs-meta);
     }
 
-    th:last-child {
-      text-align: right;
-    }
-
+    /* ── Details ────────────────────────────────────── */
     .details {
       display: grid;
       gap: 16px;
@@ -135,7 +222,7 @@ const { tagline } = bioFile.frontmatter;
 
     .detail-row {
       display: grid;
-      grid-template-columns: 110px 1fr;
+      grid-template-columns: 120px 1fr;
       gap: 16px;
       font-size: var(--fs-body);
     }
@@ -145,11 +232,11 @@ const { tagline } = bioFile.frontmatter;
       text-transform: uppercase;
       letter-spacing: var(--tracking-label);
       color: var(--muted);
-      padding-top: 2px;
+      padding-top: 3px;
     }
 
     .detail-content {
-      color: var(--muted);
+      color: var(--fg-mid);
     }
 
     .contact-links {
@@ -159,22 +246,33 @@ const { tagline } = bioFile.frontmatter;
 
     .contact-links a {
       font-family: var(--mono);
+      font-size: var(--fs-meta);
     }
 
     @media (max-width: 600px) {
-      .hide-mobile {
-        display: none;
-      }
-
-      .detail-row {
-        grid-template-columns: 1fr;
-        gap: 4px;
-      }
-
-      .contact-links {
-        flex-direction: column;
-        gap: 8px;
-      }
+      .hide-mobile { display: none; }
+      .hero-identity { flex-direction: column; align-items: flex-start; gap: 1.6rem; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; gap: var(--sp-m); }
+      .hero-meta { align-items: flex-start; }
+      .detail-row { grid-template-columns: 1fr; gap: 4px; }
+      .contact-links { flex-direction: column; gap: 8px; }
     }
   </style>
+
+  <script>
+    const clockEl = document.getElementById("clock");
+    if (clockEl) {
+      const tick = () => {
+        clockEl.textContent = new Intl.DateTimeFormat("en-US", {
+          timeZone: "America/New_York",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        }).format(new Date());
+      };
+      tick();
+      setInterval(tick, 1000);
+    }
+  </script>
 </BaseLayout>

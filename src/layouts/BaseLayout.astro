@@ -14,70 +14,82 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
     <style is:global>
+      /* ──────────────────────────────────────────────────────────────
+         New Utilitarian foundation — tokens carried forward from
+         ventures/self/acs250/design-draft-v1.html, grounded in
+         entities/product/website-poc/DESIGN-REFERENCE.md.
+         Warm-grey monochrome, dark default, Helvetica Neue + SF Mono.
+         Token NAMES are the stable interface so every page inherits.
+         ────────────────────────────────────────────────────────────── */
       :root {
-        color-scheme: light dark;
-        --bg: #fcfcfb;
-        --fg: #0f0f0f;
-        --muted: #4f4f4f;
-        --line: #d1d1d1;
-        --accent: #0f0f0f;
+        color-scheme: dark light;
+
+        /* warm-grey ramp — DARK default */
+        --bg: #0a0a09;
+        --bg-0: #0a0a09;
+        --bg-1: #131310;
+        --bg-2: #1c1c18;
+        --fg: #edeae3;
+        --fg-mid: #c8c5be;
+        --muted: #78786f;
+        --line: #1e1e1b;
+        --line-soft: #2c2c28;
+        --accent: #d4c9a8;
+
+        --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        --mono: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+        --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
         --gutter: 24px;
-        --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-          "Courier New", monospace;
 
-        /* Type scale — intentionally small. Four roles, nothing else.
-           body (reading) · lede (lead paragraphs) · label (uppercase nav/labels) · title (display) */
-        --fs-body: 0.875rem;  /* 14px */
-        --fs-lede: 1rem;      /* 16px */
-        --fs-label: 0.6875rem;/* 11px */
-        --fs-title: clamp(2.2rem, 5.5vw, 3.4rem);
-        --tracking-label: 0.2em;
+        /* Type scale (16px root). Modular-ish, hand-tuned per DESIGN-REFERENCE §1.
+           Hero pushes wide (type-as-hero); body/label restrained. */
+        --fs-hero: clamp(4rem, 9.6vw, 8rem);
+        --fs-title: clamp(2rem, 6vw, 3rem);
+        --fs-lede: 1.2rem;
+        --fs-body: 1rem;
+        --fs-label: 0.6875rem;
+        --fs-meta: 0.75rem;
+        --tracking-label: 0.16em;
+
+        /* 8pt spacing scale (DESIGN-REFERENCE §2) */
+        --sp-xs: 8px;
+        --sp-s: 16px;
+        --sp-m: 24px;
+        --sp-l: 32px;
+        --sp-xl: 48px;
+        --sp-xxl: 80px;
       }
 
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #0c0c0c;
-          --fg: #f2f2f2;
-          --muted: #b6b6b6;
-          --line: #2a2a2a;
-          --accent: #f2f2f2;
-        }
-      }
-
-      [data-theme="light"] {
-        --bg: #fcfcfb;
-        --fg: #0f0f0f;
-        --muted: #4f4f4f;
-        --line: #d1d1d1;
-        --accent: #0f0f0f;
-      }
-
-      [data-theme="dark"] {
-        --bg: #0c0c0c;
-        --fg: #f2f2f2;
-        --muted: #b6b6b6;
-        --line: #2a2a2a;
-        --accent: #f2f2f2;
+      :root[data-theme="light"] {
+        --bg: #f4f2ed;
+        --bg-0: #f4f2ed;
+        --bg-1: #eceae4;
+        --bg-2: #e2e0da;
+        --fg: #0f0f0e;
+        --fg-mid: #1e1e1c;
+        --muted: #555550;
+        --line: #a8a6a1;
+        --line-soft: #dddbd5;
+        --accent: #6b6358;
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        -webkit-font-smoothing: antialiased; /* correct for dark default (BWT) */
+        -moz-osx-font-smoothing: grayscale;
+      }
+
       body {
         margin: 0;
-        background: var(--bg);
+        background: var(--bg-0);
         color: var(--fg);
-        font-family: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-family: var(--font-sans);
         font-size: var(--fs-body);
-        line-height: 1.6;
+        line-height: 1.5;
       }
 
       a {
@@ -100,7 +112,6 @@ const {
       }
 
       .container {
-        max-width: none;
         width: 100%;
         margin: 0 auto;
       }
@@ -161,9 +172,7 @@ const {
         height: 16px;
       }
 
-      /* Theme toggle: a circle split diagonally — one half ink, one half page.
-         Shows BOTH states at once; the halves invert when the theme flips
-         (because --fg/--bg swap). */
+      /* Diagonal split toggle — one half ink, one half page; inverts on flip. */
       .theme-toggle {
         width: 15px;
         height: 15px;
@@ -199,12 +208,12 @@ const {
         text-transform: uppercase;
         letter-spacing: var(--tracking-label);
         color: var(--muted);
+        font-family: var(--mono);
       }
 
       footer .email {
-        font-family: var(--mono);
         text-transform: none;
-        letter-spacing: 0;
+        letter-spacing: 0.04em;
       }
 
       .colophon summary {
@@ -227,8 +236,7 @@ const {
         display: grid;
         gap: 6px;
         text-transform: none;
-        letter-spacing: 0;
-        font-size: var(--fs-label);
+        letter-spacing: 0.04em;
       }
 
       .colophon-content p {
@@ -237,8 +245,8 @@ const {
         color: var(--muted);
       }
 
-      /* Shared building blocks */
       .eyebrow {
+        font-family: var(--mono);
         font-size: var(--fs-label);
         text-transform: uppercase;
         letter-spacing: var(--tracking-label);
@@ -248,9 +256,9 @@ const {
       .section-title {
         font-size: var(--fs-title);
         line-height: 1.05;
-        letter-spacing: -0.01em;
+        letter-spacing: -0.02em;
         margin: 10px 0 12px;
-        font-weight: 500;
+        font-weight: 300;
       }
 
       .section-lede {
@@ -267,7 +275,6 @@ const {
         :root {
           --gutter: 48px;
         }
-
         .page {
           padding-bottom: 70px;
         }
@@ -277,6 +284,18 @@ const {
         footer {
           flex-direction: column;
           gap: 10px;
+        }
+      }
+
+      /* DESIGN-REFERENCE §4 — the gap neither UI book covers. */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
         }
       }
     </style>
@@ -306,8 +325,8 @@ const {
             <summary>Colophon</summary>
             <div class="colophon-content">
               <p>Made in Philadelphia.</p>
-              <p>Built with Astro and vanilla CSS.</p>
-              <p>AI-assisted by Claude via Claude Code. Hosted on Vercel. Set in IBM Plex.</p>
+              <p>Built with Astro and vanilla CSS, grounded in a corpus-defined type system.</p>
+              <p>Set in Helvetica Neue &amp; SF Mono. Hosted on Vercel.</p>
             </div>
           </details>
         </footer>
@@ -321,26 +340,23 @@ const {
         document.documentElement.setAttribute("data-theme", theme);
       };
 
-      const systemTheme = () =>
-        window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      // NU intent: dark by default; honor an explicit stored choice.
+      const initTheme = () => {
+        const stored = localStorage.getItem(storageKey);
+        applyTheme(stored || "dark");
+      };
 
       const updateToggle = (theme) => {
         if (!toggle) return;
-        // The circle shows the CURRENT color; the label announces the action.
         toggle.setAttribute("aria-label", theme === "dark" ? "Switch to light theme" : "Switch to dark theme");
       };
 
-      const initTheme = () => {
-        const stored = localStorage.getItem(storageKey);
-        applyTheme(stored || systemTheme());
-      };
-
       initTheme();
-      updateToggle(document.documentElement.getAttribute("data-theme") || "light");
+      updateToggle(document.documentElement.getAttribute("data-theme") || "dark");
 
       if (toggle) {
         toggle.addEventListener("click", () => {
-          const current = document.documentElement.getAttribute("data-theme") || "light";
+          const current = document.documentElement.getAttribute("data-theme") || "dark";
           const next = current === "dark" ? "light" : "dark";
           applyTheme(next);
           localStorage.setItem(storageKey, next);
